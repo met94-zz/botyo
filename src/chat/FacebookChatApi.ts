@@ -33,7 +33,8 @@ export class FacebookChatApi implements ChatApi, MessageListener
     listen(handler: MessageHandler): StopListeningFunction
     {
         this.handler = handler;
-        return (this.stopListeningFn = this.facebookChatApi.listen(handler));
+        //return (this.stopListeningFn = this.facebookChatApi.listen(handler));
+        return (this.stopListeningFn = this.facebookChatApi.listenMqtt(handler));
     }
 
     async sendMessage(threadId: FacebookId, message: OutgoingMessage | string): Promise<Message>
