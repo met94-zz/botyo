@@ -1,5 +1,5 @@
 !build/
-src/
+!src/
 docs/
 
 # Created by .ignore support plugin (hsz.mobi)
