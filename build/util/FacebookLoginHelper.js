@@ -28,7 +28,7 @@ let FacebookLoginHelper = FacebookLoginHelper_1 = class FacebookLoginHelper {
         const self = this;
         return new Promise((doResolve, reject) => {
             this.logger.info("Logging in...");
-            fbLogin(this.makeLoginOptions(), { logLevel: "silent" }, (err, api) => {
+            fbLogin(this.makeLoginOptions(), (err, api) => {
                 if (err) {
                     if (err.error === "login-approval") {
                         const waitTime = this.applicationConfiguration.getOrElse(FacebookLoginHelper_1.CONFIG_FACEBOOK_APPROVAL_TIMEOUT, FacebookLoginHelper_1.CONFIG_FACEBOOK_APPROVAL_TIMEOUT_DEFAULT);

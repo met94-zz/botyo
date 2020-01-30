@@ -23,7 +23,7 @@ export default class FacebookLoginHelper
         return new Promise<ChatApi>((doResolve, reject) => {
             this.logger.info("Logging in...");
 
-            fbLogin(this.makeLoginOptions(), { logLevel: "silent" }, (err: any, api: any) => {
+            fbLogin(this.makeLoginOptions(), (err: any, api: any) => {
                 if (err) {
                     if (err.error === "login-approval") {
                         const waitTime = this.applicationConfiguration.getOrElse(
