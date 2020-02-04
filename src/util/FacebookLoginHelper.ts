@@ -23,7 +23,7 @@ export default class FacebookLoginHelper
         return new Promise<ChatApi>((doResolve, reject) => {
             this.logger.info("Logging in...");
 
-            fbLogin(this.makeLoginOptions(), (err: any, api: any) => {
+            fbLogin(this.makeLoginOptions(), this.makeOptions(), (err: any, api: any) => {
                 if (err) {
                     if (err.error === "login-approval") {
                         const waitTime = this.applicationConfiguration.getOrElse(
@@ -97,6 +97,19 @@ export default class FacebookLoginHelper
         return loginData;
     }
 
+    private makeOptions(): object
+    {
+        const options: any = {};
+
+        if (this.applicationConfiguration.hasProperty(FacebookLoginHelper.CONFIG_FACEBOOK_USER_AGENT)) {
+            this.logger.info("Using custom user agent");
+            options.userAgent = this.applicationConfiguration.getProperty(FacebookLoginHelper.CONFIG_FACEBOOK_USER_AGENT);
+            this.logger.info(options.userAgent);
+        }
+
+        return options;
+    }
+
     private getCookiesFilePath(): string
     {
         return this.applicationConfiguration.getOrElse(
@@ -118,6 +131,8 @@ export default class FacebookLoginHelper
 
     static readonly CONFIG_FACEBOOK_APPROVAL_TIMEOUT = "facebook.approvalTimeout";
     static readonly CONFIG_FACEBOOK_APPROVAL_TIMEOUT_DEFAULT = 30;
+	
+    static readonly CONFIG_FACEBOOK_USER_AGENT = "facebook.userAgent";
 
     static readonly CONFIG_FACEBOOK_SELF_LISTEN = "facebook.selfListen";
     static readonly CONFIG_FACEBOOK_SELF_LISTEN_DEFAULT = false;

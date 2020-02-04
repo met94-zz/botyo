@@ -9,6 +9,7 @@ export default class FacebookLoginHelper {
     private persistAppState;
     private configureApi;
     private makeLoginOptions;
+    private makeOptions;
     private getCookiesFilePath;
     private isAppStateAvailable;
     static readonly CONFIG_COOKIES_FILE: string;
@@ -17,6 +18,7 @@ export default class FacebookLoginHelper {
     static readonly CONFIG_FACEBOOK_PASSWORD: string;
     static readonly CONFIG_FACEBOOK_APPROVAL_TIMEOUT: string;
     static readonly CONFIG_FACEBOOK_APPROVAL_TIMEOUT_DEFAULT: number;
+    static readonly CONFIG_FACEBOOK_USER_AGENT: string;
     static readonly CONFIG_FACEBOOK_SELF_LISTEN: string;
     static readonly CONFIG_FACEBOOK_SELF_LISTEN_DEFAULT: boolean;
 }

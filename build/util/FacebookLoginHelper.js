@@ -28,7 +28,7 @@ let FacebookLoginHelper = FacebookLoginHelper_1 = class FacebookLoginHelper {
         const self = this;
         return new Promise((doResolve, reject) => {
             this.logger.info("Logging in...");
-            fbLogin(this.makeLoginOptions(), (err, api) => {
+            fbLogin(this.makeLoginOptions(), this.makeOptions(), (err, api) => {
                 if (err) {
                     if (err.error === "login-approval") {
                         const waitTime = this.applicationConfiguration.getOrElse(FacebookLoginHelper_1.CONFIG_FACEBOOK_APPROVAL_TIMEOUT, FacebookLoginHelper_1.CONFIG_FACEBOOK_APPROVAL_TIMEOUT_DEFAULT);
@@ -74,6 +74,15 @@ let FacebookLoginHelper = FacebookLoginHelper_1 = class FacebookLoginHelper {
         }
         return loginData;
     }
+    makeOptions() {
+        const options = {};
+        if (this.applicationConfiguration.hasProperty(FacebookLoginHelper_1.CONFIG_FACEBOOK_USER_AGENT)) {
+            this.logger.info("Using custom user agent");
+            options.userAgent = this.applicationConfiguration.getProperty(FacebookLoginHelper_1.CONFIG_FACEBOOK_USER_AGENT);
+            this.logger.info(options.userAgent);
+        }
+        return options;
+    }
     getCookiesFilePath() {
         return this.applicationConfiguration.getOrElse(FacebookLoginHelper_1.CONFIG_COOKIES_FILE, FacebookLoginHelper_1.CONFIG_COOKIES_FILE_DEFAULT);
     }
@@ -87,6 +96,7 @@ FacebookLoginHelper.CONFIG_FACEBOOK_EMAIL = "facebook.email";
 FacebookLoginHelper.CONFIG_FACEBOOK_PASSWORD = "facebook.password";
 FacebookLoginHelper.CONFIG_FACEBOOK_APPROVAL_TIMEOUT = "facebook.approvalTimeout";
 FacebookLoginHelper.CONFIG_FACEBOOK_APPROVAL_TIMEOUT_DEFAULT = 30;
+FacebookLoginHelper.CONFIG_FACEBOOK_USER_AGENT = "facebook.userAgent";
 FacebookLoginHelper.CONFIG_FACEBOOK_SELF_LISTEN = "facebook.selfListen";
 FacebookLoginHelper.CONFIG_FACEBOOK_SELF_LISTEN_DEFAULT = false;
 FacebookLoginHelper = FacebookLoginHelper_1 = __decorate([
