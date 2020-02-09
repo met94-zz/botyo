@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 var AsyncResolvableChatParticipantsResolver_1;
+Object.defineProperty(exports, "__esModule", { value: true });
 const botyo_api_1 = require("botyo-api");
 const inversify_1 = require("inversify");
 const _ = require("lodash");

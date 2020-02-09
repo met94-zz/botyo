@@ -1,0 +1,118 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>botyo</Name>
+    <RootNamespace>botyo</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>f97680c0-82e2-49b8-936a-54ae84f8a89a</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <EnableTypeScript>true</EnableTypeScript>
+    <StartWebBrowser>false</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="tsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+    <Folder Include="src\chat\" />
+    <Folder Include="src\config\" />
+    <Folder Include="src\modules\" />
+    <Folder Include="src\modules\util\" />
+    <Folder Include="src\util\" />
+    <Folder Include="src\util\async\" />
+    <Folder Include="src\util\ioc\" />
+    <Folder Include="src\util\logging\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\Botyo.ts" />
+    <TypeScriptCompile Include="src\BotyoBuilder.ts" />
+    <TypeScriptCompile Include="src\chat\FacebookChatApi.ts" />
+    <TypeScriptCompile Include="src\config\AbstractConfiguration.ts" />
+    <TypeScriptCompile Include="src\config\AbstractModuleConfiguration.ts" />
+    <TypeScriptCompile Include="src\config\LodashConfiguration.ts" />
+    <TypeScriptCompile Include="src\config\MessageContextAwareModuleConfiguration.ts" />
+    <TypeScriptCompile Include="src\config\MessageContextSwitcherImpl.ts" />
+    <TypeScriptCompile Include="src\config\ModuleConfigurationImpl.ts" />
+    <TypeScriptCompile Include="src\config\YamlApplicationConfiguration.ts" />
+    <TypeScriptCompile Include="src\index.ts" />
+    <TypeScriptCompile Include="src\modules\ChatThreadFilter.ts" />
+    <TypeScriptCompile Include="src\modules\ChatThreadParticipantsUpdaterScheduledTask.ts" />
+    <TypeScriptCompile Include="src\modules\CommandExecutorFilter.ts" />
+    <TypeScriptCompile Include="src\modules\FriendlyCommandErrorHandler.ts" />
+    <TypeScriptCompile Include="src\modules\HelpCommand.ts" />
+    <TypeScriptCompile Include="src\modules\util\FilterChain.ts" />
+    <TypeScriptCompile Include="src\modules\util\TaskScheduler.ts" />
+    <TypeScriptCompile Include="src\util\async\AsyncResolvableAzureStorage.ts" />
+    <TypeScriptCompile Include="src\util\async\AsyncResolvableChatParticipantsResolver.ts" />
+    <TypeScriptCompile Include="src\util\async\AsyncResolvableFacebookChatApi.ts" />
+    <TypeScriptCompile Include="src\util\ChatThreadUtilsImpl.ts" />
+    <TypeScriptCompile Include="src\util\FacebookLoginHelper.ts" />
+    <TypeScriptCompile Include="src\util\ioc\ApplicationContainer.ts" />
+    <TypeScriptCompile Include="src\util\ioc\CommandManager.ts" />
+    <TypeScriptCompile Include="src\util\ioc\ModuleRegistry.ts" />
+    <TypeScriptCompile Include="src\util\logging\LoggingUtils.ts" />
+    <TypeScriptCompile Include="src\util\ModuleAwareRuntimeImpl.ts" />
+    <TypeScriptCompile Include="src\util\TypeUtils.ts" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -62,6 +62,6 @@ class BotyoBuilder {
         }
     }
 }
-BotyoBuilder.DEFAULT_CONFIG_FILE = "config.yaml";
 exports.default = BotyoBuilder;
+BotyoBuilder.DEFAULT_CONFIG_FILE = "config.yaml";
 //# sourceMappingURL=BotyoBuilder.js.map

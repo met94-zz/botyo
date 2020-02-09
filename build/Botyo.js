@@ -20,6 +20,7 @@ const TaskScheduler_1 = require("./modules/util/TaskScheduler");
 const ModuleRegistry_1 = require("./util/ioc/ModuleRegistry");
 const Bluebird = require("bluebird");
 const CommandManager_1 = require("./util/ioc/CommandManager");
+const AsyncResolvableAzureStorage_1 = require("./util/async/AsyncResolvableAzureStorage");
 class Botyo {
     constructor(applicationConfigurationProvider, asyncResolvables, modules, commandErrorHandler, moduleConfigs) {
         this.applicationConfigurationProvider = applicationConfigurationProvider;
@@ -27,16 +28,19 @@ class Botyo {
         this.modules = modules;
         this.commandErrorHandler = commandErrorHandler;
         this.moduleConfigs = moduleConfigs;
+        this.startFinished = false;
         this.running = false;
     }
     async start() {
         if (this.running)
             return;
         this.running = true;
+        this.startFinished = false;
         Botyo.printBanner();
         this.logger = LoggingUtils_1.default.createLogger("Botyo", true);
         process.on('unhandledRejection', reason => {
             this.logger.error(String(reason));
+            //this.logger.error(LoggingUtils.objectDumper(reason, 0));
         });
         this.applicationContainer = ApplicationContainer_1.default.create();
         this.applicationConfiguration = this.applicationConfigurationProvider.call(this);
@@ -47,6 +51,7 @@ class Botyo {
         this.bindModules();
         await this.attachFilterChainMessageListener();
         this.startTaskScheduler();
+        this.startFinished = true;
     }
     async stop() {
         if (!this.running)
@@ -66,6 +71,7 @@ class Botyo {
         this.logger.info("Botyo has been shut down");
     }
     async bindAsyncResolvables() {
+        await this.applicationContainer.bindAndResolveAsyncResolvable(AsyncResolvableAzureStorage_1.AsyncResolvableAzureStorage);
         await this.applicationContainer.bindAndResolveAsyncResolvable(AsyncResolvableFacebookChatApi_1.default);
         await this.applicationContainer.bindAndResolveAsyncResolvable(AsyncResolvableChatParticipantsResolver_1.default);
         for (let ar of this.asyncResolvables) {

@@ -17,7 +17,7 @@ export default class CommandManager {
     static makeHelpText(prefix: string, commandName: string, commandModule: CommandModule): string;
     static isCommandHiddenInContext(commandModule: CommandModule, ctx: Message): boolean;
     static isCommandEnabledInContext(commandModule: CommandModule, msg: Message): boolean;
-    static readonly CONFIG_KEY_COMMAND: string;
-    static readonly CONFIG_KEY_PREFIX: string;
-    static readonly DEFAULT_PREFIX: string;
+    static readonly CONFIG_KEY_COMMAND = "command";
+    static readonly CONFIG_KEY_PREFIX = "prefix";
+    static readonly DEFAULT_PREFIX = "#";
 }

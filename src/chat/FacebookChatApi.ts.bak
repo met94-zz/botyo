@@ -167,11 +167,12 @@ export class FacebookChatApi implements ChatApi, MessageListener
                         return promise;
                     }
                     else {
+
                         //self.logger.error(LoggingUtils.objectDumper(err, 0));
-                    	//return;
                     }
 
-                    throw err;
+                    //throw err;
+                    return;
                 });
             }
         }[fn.name || "fn"];

@@ -1,9 +1,14 @@
 import { ApplicationConfiguration, ChatApi, Logger } from "botyo-api";
+import { BlobServiceClient } from "@azure/storage-blob";
 export default class FacebookLoginHelper {
     private readonly applicationConfiguration;
     private readonly logger;
+    private readonly azureStorage;
     private readonly cookiesFilePath;
-    constructor(applicationConfiguration: ApplicationConfiguration, logger: Logger);
+    private readonly approvalWaitTime;
+    constructor(applicationConfiguration: ApplicationConfiguration, logger: Logger, azureStorage: BlobServiceClient);
+    getAuthorizationCode(): Promise<string | null>;
+    private tryLogin;
     login(): Promise<ChatApi>;
     private removePasswordFromConfiguration;
     private persistAppState;
@@ -12,13 +17,16 @@ export default class FacebookLoginHelper {
     private makeOptions;
     private getCookiesFilePath;
     private isAppStateAvailable;
-    static readonly CONFIG_COOKIES_FILE: string;
-    static readonly CONFIG_COOKIES_FILE_DEFAULT: string;
-    static readonly CONFIG_FACEBOOK_EMAIL: string;
-    static readonly CONFIG_FACEBOOK_PASSWORD: string;
-    static readonly CONFIG_FACEBOOK_APPROVAL_TIMEOUT: string;
-    static readonly CONFIG_FACEBOOK_APPROVAL_TIMEOUT_DEFAULT: number;
-    static readonly CONFIG_FACEBOOK_USER_AGENT: string;
-    static readonly CONFIG_FACEBOOK_SELF_LISTEN: string;
-    static readonly CONFIG_FACEBOOK_SELF_LISTEN_DEFAULT: boolean;
+    static readonly CONFIG_COOKIES_FILE = "facebook.cookiesFile";
+    static readonly CONFIG_COOKIES_FILE_DEFAULT = "cookies.json";
+    static readonly CONFIG_FACEBOOK_EMAIL = "facebook.email";
+    static readonly CONFIG_FACEBOOK_PASSWORD = "facebook.password";
+    static readonly CONFIG_FACEBOOK_APPROVAL_TIMEOUT = "facebook.approvalTimeout";
+    static readonly CONFIG_FACEBOOK_APPROVAL_TIMEOUT_DEFAULT = 30;
+    static readonly CONFIG_FACEBOOK_USER_AGENT = "facebook.userAgent";
+    static readonly CONFIG_FACEBOOK_FORCE_LOGIN = "facebook.forceLogin";
+    static readonly CONFIG_AZURE_CONTAINER_NAME = "azure.container";
+    static readonly CONFIG_AZURE_SECRET_FILE_NAME = "azure.secret";
+    static readonly CONFIG_FACEBOOK_SELF_LISTEN = "facebook.selfListen";
+    static readonly CONFIG_FACEBOOK_SELF_LISTEN_DEFAULT = false;
 }

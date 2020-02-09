@@ -14,18 +14,39 @@ import { AbstractConfiguration } from "./AbstractConfiguration";
 
 export default class YamlApplicationConfiguration extends AbstractConfiguration implements ApplicationConfiguration
 {
-    private readonly config: LodashConfiguration;
+    private config: LodashConfiguration;
     private rawConfigObj: object;
 
-    constructor(path: string)
+    constructor(path: string);
+    constructor(rawConfigBuffer: Buffer);
+    constructor(pathOrBuffer: string | Buffer)
     {
         super();
 
-        if (!fs.existsSync(path)) {
-            throw new Error(`Configuration file '${path}' does not exist`);
+        let rawConfigBuffer: Buffer;
+        if (typeof (pathOrBuffer) === 'string') {
+            let path: string = pathOrBuffer;
+            if (!fs.existsSync(path)) {
+                throw new Error(`Configuration file '${path}' does not exist`);
+            }
+            rawConfigBuffer = fs.readFileSync(path);
+        }
+        else {
+            rawConfigBuffer = pathOrBuffer;
         }
 
-        this.rawConfigObj = YAML.load(fs.readFileSync(path, 'utf8')) as object;
+        this.rawConfigObj = YAML.load(rawConfigBuffer.toString('utf8')) as object;
+        YamlApplicationConfiguration.expandConfig(this.rawConfigObj);
+
+        this.config = new LodashConfiguration(this.rawConfigObj);
+    }
+
+    private initialise(rawConfigBuffer: Buffer) {
+        if (!rawConfigBuffer) {
+            throw new Error(`Configuration buffer is empty`);
+        }
+
+        this.rawConfigObj = YAML.load(rawConfigBuffer.toString('utf8')) as object;
         YamlApplicationConfiguration.expandConfig(this.rawConfigObj);
 
         this.config = new LodashConfiguration(this.rawConfigObj);

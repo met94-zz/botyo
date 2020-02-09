@@ -8,6 +8,7 @@ export default class Botyo {
     private readonly modules;
     private readonly commandErrorHandler;
     private readonly moduleConfigs;
+    startFinished: boolean;
     private applicationConfiguration;
     private applicationContainer;
     private stopListening;

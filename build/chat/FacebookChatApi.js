@@ -104,6 +104,10 @@ class FacebookChatApi {
                         self.loginPromise.finally(() => { self.loginPromise = undefined; });
                         return promise;
                     }
+                    else {
+                        //self.logger.error(LoggingUtils.objectDumper(err, 0));
+                        //return;
+                    }
                     throw err;
                 });
             }

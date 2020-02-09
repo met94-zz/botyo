@@ -29,9 +29,11 @@ import ModuleRegistry from "./util/ioc/ModuleRegistry";
 import * as Bluebird from "bluebird";
 import { Container } from "inversify";
 import CommandManager from "./util/ioc/CommandManager";
+import { AsyncResolvableAzureStorage } from "./util/async/AsyncResolvableAzureStorage";
 
 export default class Botyo
 {
+	public startFinished: boolean = false;
     private applicationConfiguration: ApplicationConfiguration;
     private applicationContainer: ApplicationContainer;
     private stopListening: StopListeningFunction;
@@ -51,12 +53,14 @@ export default class Botyo
     {
         if (this.running) return;
         this.running = true;
+		this.startFinished = false;
 
         Botyo.printBanner();
 
         this.logger = LoggingUtils.createLogger("Botyo", true);
         process.on('unhandledRejection', reason => {
             this.logger.error(String(reason));
+            //this.logger.error(LoggingUtils.objectDumper(reason, 0));
         });
 
         this.applicationContainer = ApplicationContainer.create();
@@ -69,6 +73,7 @@ export default class Botyo
         this.bindModules();
         await this.attachFilterChainMessageListener();
         this.startTaskScheduler();
+		this.startFinished = true;
     }
 
     async stop(): Promise<void>
@@ -92,6 +97,7 @@ export default class Botyo
 
     private async bindAsyncResolvables()
     {
+        await this.applicationContainer.bindAndResolveAsyncResolvable(AsyncResolvableAzureStorage);
         await this.applicationContainer.bindAndResolveAsyncResolvable(AsyncResolvableFacebookChatApi);
         await this.applicationContainer.bindAndResolveAsyncResolvable(AsyncResolvableChatParticipantsResolver);
 

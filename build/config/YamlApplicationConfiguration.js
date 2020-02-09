@@ -8,12 +8,28 @@ const LodashConfiguration_1 = require("./LodashConfiguration");
 const ModuleConfigurationImpl_1 = require("./ModuleConfigurationImpl");
 const AbstractConfiguration_1 = require("./AbstractConfiguration");
 class YamlApplicationConfiguration extends AbstractConfiguration_1.AbstractConfiguration {
-    constructor(path) {
+    constructor(pathOrBuffer) {
         super();
-        if (!fs.existsSync(path)) {
-            throw new Error(`Configuration file '${path}' does not exist`);
+        let rawConfigBuffer;
+        if (typeof (pathOrBuffer) === 'string') {
+            let path = pathOrBuffer;
+            if (!fs.existsSync(path)) {
+                throw new Error(`Configuration file '${path}' does not exist`);
+            }
+            rawConfigBuffer = fs.readFileSync(path);
         }
-        this.rawConfigObj = YAML.load(fs.readFileSync(path, 'utf8'));
+        else {
+            rawConfigBuffer = pathOrBuffer;
+        }
+        this.rawConfigObj = YAML.load(rawConfigBuffer.toString('utf8'));
+        YamlApplicationConfiguration.expandConfig(this.rawConfigObj);
+        this.config = new LodashConfiguration_1.default(this.rawConfigObj);
+    }
+    initialise(rawConfigBuffer) {
+        if (!rawConfigBuffer) {
+            throw new Error(`Configuration buffer is empty`);
+        }
+        this.rawConfigObj = YAML.load(rawConfigBuffer.toString('utf8'));
         YamlApplicationConfiguration.expandConfig(this.rawConfigObj);
         this.config = new LodashConfiguration_1.default(this.rawConfigObj);
     }
