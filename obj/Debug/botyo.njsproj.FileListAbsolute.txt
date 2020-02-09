@@ -1,2 +1,0 @@
-C:\Programming\Nodejs\botyo\obj\Debug\botyo.njsprojAssemblyReference.cache
-C:\Programming\Nodejs\botyo\bin\Microsoft.NodejsTools.WebRole.dll
